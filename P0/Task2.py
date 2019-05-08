@@ -20,8 +20,6 @@ Print a message:
 September 2016.".
 """
 time_spent_on_phone_by_number = {}
-number_with_longest_call_time = None
-longest_call_time = 0
 
 for call in calls:
     if call[0] not in time_spent_on_phone_by_number:
@@ -34,9 +32,7 @@ for call in calls:
     else:
         time_spent_on_phone_by_number[call[1]] += int(call[3])
 
-for number, total_time_on_phone in time_spent_on_phone_by_number.items():
-    if total_time_on_phone > longest_call_time:
-        longest_call_time = total_time_on_phone
-        number_with_longest_call_time = number
+number_with_longest_call_time = max(time_spent_on_phone_by_number, key=time_spent_on_phone_by_number.get)
+longest_call_time = max(time_spent_on_phone_by_number.values())
 
 print(f'{number_with_longest_call_time} spent the longest time, {longest_call_time}, on the phone during September 2016.')
