@@ -51,7 +51,7 @@ def get_fixed_line_area_code(number):
 
 
 def get_mobile_phone_prefix(number):
-    return number [0 : 3]
+    return number[0:4]
 
 
 def get_telemarketer_area_code(number):
@@ -80,23 +80,27 @@ total_number_of_calls_to_bangalore_from_bangalore = 0
 for call in calls:
     if is_bangalore(call[0]):
         total_number_of_calls_from_bangalore += 1
+        if is_fixed_line(call[0]):
+            if is_fixed_line(call[1]):
+                all_called_area_codes.add(get_fixed_line_area_code(call[1]))
+
+            if is_mobile_phone(call[1]):
+                all_called_area_codes.add(get_mobile_phone_prefix(call[1]))
+
+            if is_telemarketer(call[1]):
+                all_called_area_codes.add(get_telemarketer_area_code(call[1]))
+
         if is_bangalore(call[1]):
             total_number_of_calls_to_bangalore_from_bangalore += 1
 
-    if is_fixed_line(call[1]):
-        all_called_area_codes.add(get_fixed_line_area_code(call[1]))
 
-    if is_mobile_phone(call[1]):
-        all_called_area_codes.add(get_mobile_phone_prefix(call[1]))
-
-    if is_telemarketer(call[1]):
-        all_called_area_codes.add(get_telemarketer_area_code(call[1]))
 
 print('The numbers called by people in Bangalore have codes:')
 for area_code in sorted(all_called_area_codes):
     print(area_code)
 
-print(f'{round(total_number_of_calls_to_bangalore_from_bangalore / total_number_of_calls_from_bangalore, 2)}'
-      f' of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.')
+percentage = '{:.2%}'.format(total_number_of_calls_to_bangalore_from_bangalore / total_number_of_calls_from_bangalore)
+
+print(f'{percentage} of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.')
 
 
