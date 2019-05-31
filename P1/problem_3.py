@@ -4,11 +4,12 @@ import sys
 
 class Node:
     def __init__(self, char, freq):
-        self.char = char
-        self.freq = freq
-        self.left = None
-        self.right = None
+        self.char = char    # The character that the node is representing in our tree
+        self.freq = freq    # The frequency in which the character appears in the text we are going to encode
+        self.left = None    # A reference to the left child node.
+        self.right = None   # A reference to the right child node.
 
+    # Below are custom comparison operators we need for sorting our nodes into the priority queue.
     def __eq__(self, other):
         return self.freq == other.freq
 
@@ -21,9 +22,9 @@ class Node:
 
 class HuffmanCoding:
     def __init__(self):
-        self.heap = []             # Used to keep track of our tree
-        self.codes = {}            # Used to keep track of the codes and their corresponding value
-        self.reverse_mapping = {}  # Used to keep track of the compressed code and their corresponding character
+        self.heap = []               # Used as a priority queue in order help when constructing the tree
+        self.codes = {}              # Used to keep track of the characters and their corresponding value
+        self.character_mapping = {}  # Used to keep track of the compressed code and their corresponding character
 
     def make_frequency_dict(self, text):
         """
@@ -37,6 +38,7 @@ class HuffmanCoding:
             if character not in frequency:
                 frequency[character] = 0
             frequency[character] += 1
+
         return frequency
 
     def make_tree(self, frequency):
@@ -60,13 +62,16 @@ class HuffmanCoding:
         """
 
         while len(self.heap) > 1:
+            # Get the two nodes with the lowest frequency from the heap.
             node1 = heapq.heappop(self.heap)
             node2 = heapq.heappop(self.heap)
 
+            # Create a new node with the combined frequency of the least occurring nodes in the heap.
             merged = Node(None, node1.freq + node2.freq)
             merged.left = node1
             merged.right = node2
 
+            # Push the new node onto the heap.
             heapq.heappush(self.heap, merged)
 
     def make_codes(self):
@@ -87,14 +92,17 @@ class HuffmanCoding:
         :param current_code: The current code that we are assigning to the value for our current node.
         :return: No return, but will set the instance variable for our mapping to and from code to character.
         """
+        # Base case to break out of leaf nodes
         if root is None:
             return
 
+        # Add the code to our codes map, and update our character mapping so we can decode later.
         if root.char is not None:
             self.codes[root.char] = current_code
-            self.reverse_mapping[current_code] = root.char
-            return
+            self.character_mapping[current_code] = root.char
 
+        # Recursively repeat this process for the left and right nodes, adding the appropriate bit for the code
+        # of the nodes on the lower levels of our tree.
         self.do_make_codes(root.left, current_code + "0")
         self.do_make_codes(root.right, current_code + "1")
 
@@ -108,6 +116,7 @@ class HuffmanCoding:
         encoded_text = ""
         for character in text:
             encoded_text += self.codes[character]
+
         return encoded_text
 
     def compress(self, text):
@@ -120,8 +129,8 @@ class HuffmanCoding:
         frequency = self.make_frequency_dict(text)
         self.make_tree(frequency)
         self.make_codes()
-
         encoded_text = self.get_encoded_text(text)
+
         return encoded_text
 
     def decompress(self, encoded_text):
@@ -133,10 +142,12 @@ class HuffmanCoding:
         current_code = ""
         decoded_text = ""
 
+        # Loop over our bits, building a code string as we go. When we find a code string that matches something in our
+        # character mapping, append that character to our decoded text.
         for bit in encoded_text:
             current_code += bit
-            if current_code in self.reverse_mapping:
-                character = self.reverse_mapping[current_code]
+            if current_code in self.character_mapping:
+                character = self.character_mapping[current_code]
                 decoded_text += character
                 current_code = ""
 
