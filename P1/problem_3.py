@@ -69,6 +69,16 @@ class HuffmanCoding:
 
             heapq.heappush(self.heap, merged)
 
+    def make_codes(self):
+        """
+        Calls our recursive function to set our codes.
+
+        :return: No return, but will set the instance variable for our mapping to and from code to character.
+        """
+        root = heapq.heappop(self.heap)
+        current_code = ""
+        self.do_make_codes(root, current_code)
+
     def do_make_codes(self, root, current_code):
         """
         The actual recursive function that we use to make our codes.
@@ -88,23 +98,25 @@ class HuffmanCoding:
         self.do_make_codes(root.left, current_code + "0")
         self.do_make_codes(root.right, current_code + "1")
 
-    def make_codes(self):
-        """
-        Calls our recursive function to set our codes.
-
-        :return: No return, but will set the instance variable for our mapping to and from code to character.
-        """
-        root = heapq.heappop(self.heap)
-        current_code = ""
-        self.do_make_codes(root, current_code)
-
     def get_encoded_text(self, text):
+        """
+        Encodes a string using our Huffman tree values.
+
+        :param text: The text that we are going to encode using the codes created from our Huffman tree.
+        :return: A series of bits that represent our encoded text.
+        """
         encoded_text = ""
         for character in text:
             encoded_text += self.codes[character]
         return encoded_text
 
     def compress(self, text):
+        """
+        Compresses our text using Huffman coding.
+
+        :param text: The text we want to encode.
+        :return: Our encoded text as a series of bits.
+        """
         frequency = self.make_frequency_dict(text)
         self.make_tree(frequency)
         self.make_codes()
@@ -112,7 +124,12 @@ class HuffmanCoding:
         encoded_text = self.get_encoded_text(text)
         return encoded_text
 
-    def decode_text(self, encoded_text):
+    def decompress(self, encoded_text):
+        """
+
+        :param encoded_text: The series of bits that represent our encoded text.
+        :return: Our original text.
+        """
         current_code = ""
         decoded_text = ""
 
@@ -124,10 +141,6 @@ class HuffmanCoding:
                 current_code = ""
 
         return decoded_text
-
-    def decompress(self, encoded_text):
-        decompressed_text = self.decode_text(encoded_text)
-        return decompressed_text
 
 
 if __name__ == "__main__":
