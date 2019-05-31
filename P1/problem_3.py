@@ -126,6 +126,9 @@ class HuffmanCoding:
         :param text: The text we want to encode.
         :return: Our encoded text as a series of bits.
         """
+        if text is "":
+            return "ERROR: There is no code to compress"
+
         frequency = self.make_frequency_dict(text)
         self.make_tree(frequency)
         self.make_codes()
@@ -139,6 +142,10 @@ class HuffmanCoding:
         :param encoded_text: The series of bits that represent our encoded text.
         :return: Our original text.
         """
+
+        if encoded_text is "":
+            return "ERROR: There is no code to decompress"
+
         current_code = ""
         decoded_text = ""
 
@@ -155,20 +162,48 @@ class HuffmanCoding:
 
 
 if __name__ == "__main__":
-    compressor = HuffmanCoding()
+    # Begin First Test Case
+    first_compressor = HuffmanCoding()
+    first_sentence = "The bird is the word"
 
-    a_great_sentence = "The bird is the word"
+    print("Test Case #1")
+    print("The size of the data is: {}".format(sys.getsizeof(first_sentence)))
+    print("The content of the data is: {}".format(first_sentence))
 
-    print("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
-    print("The content of the data is: {}\n".format(a_great_sentence))
+    encoded_data = first_compressor.compress(first_sentence)
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
 
-    encoded_data = compressor.compress("The bird is the word")
+    decoded_data = first_compressor.decompress(encoded_data)
+    print("The size of the decoded data is: {}".format(sys.getsizeof(decoded_data)))
+    print("The content of the encoded data is: {}\n".format(decoded_data))
 
-    print("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
-    print("The content of the encoded data is: {}\n".format(encoded_data))
+    # Begin Second Test Case
+    second_compressor = HuffmanCoding()
+    second_sentence = "A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. A very long piece of text. "
 
-    decoded_data = compressor.decompress(encoded_data)
+    print("Test Case #2")
+    print("The size of the data is: {}".format(sys.getsizeof(second_sentence)))
+    print("The content of the data is: {}".format(second_sentence))
 
-    print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    encoded_data = second_compressor.compress(second_sentence)
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
+
+    decoded_data = second_compressor.decompress(encoded_data)
+    print("The size of the decoded data is: {}".format(sys.getsizeof(decoded_data)))
+    print("The content of the encoded data is: {}\n".format(decoded_data))
+
+    # Begin Third Case
+    third_compressor = HuffmanCoding()
+    empty_string = ""
+
+    print("Test Case #3")
+    print("The content of the data is: {}".format(empty_string))
+
+    encoded_data = third_compressor.compress(empty_string)
+    print("The content of the encoded data is: {}".format(encoded_data))
+
+    decoded_data = third_compressor.decompress(empty_string)
     print("The content of the encoded data is: {}\n".format(decoded_data))
 

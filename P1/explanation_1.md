@@ -20,3 +20,6 @@ The cache itself is implemented using a dict. We simply store the items in the d
 pair. When our queue has reached it's capacity, the item that is dequed is the stale cache item, so
 we use the value of that dequed node to delete the item from our cache. Dicts also have a runtime of
 O(1), so this satisfies our implementation requirements as well.
+
+The space complexity is also O(1), since we will never store more than 5 elements in either the dict
+or the dequeue. 

@@ -14,7 +14,8 @@ For our union implementation, we were given the criteria of being passed in two 
 returning a linked list. To implement the union function, we simply loop over each of our lists
 and check to see if the element in that list has already been added to our union. Since for each
 element in the lists passed in we must also search through the union list, our union function
-has a runtime of O(n^2).
+has a runtime of O(n^2). The space complexity is O(n), as we must maintain the union list where
+we store the elements found in either of the provided lists.
 
 ### Intersection
 The intersection implementation follows a similar logic as the union function, with some small
@@ -23,4 +24,5 @@ how many times we iterate. Then, we iterate through the larger list, checking to
 the element also exists in our smaller (or equal size) list. If it does, we also check to see if
 it exists in the intersection list we are constructing. If it does not, we add it into the
 intersection list. Since again we are doing nested looping, our intersection function has a
-runtime of O(n^2).
+runtime of O(n^2). The space complexity is O(n), as we must maintain the intersection list where
+we store the elements found in both of the provided lists.
