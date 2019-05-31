@@ -53,7 +53,7 @@ class Queue:
         return self.capacity == self.size
 
 
-class LRU_Cache(object):
+class LRUCache(object):
 
     def __init__(self, capacity):
         self.queue = Queue(capacity)
@@ -76,7 +76,7 @@ class LRU_Cache(object):
         self.cache[key] = value
 
 
-our_cache = LRU_Cache(5)
+our_cache = LRUCache(5)
 
 our_cache.set(1, 1)
 our_cache.set(2, 2)

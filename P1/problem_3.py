@@ -21,9 +21,9 @@ class Node:
 
 class HuffmanCoding:
     def __init__(self):
-        self.heap = [] # Used to keep track of our tree
-        self.codes = {} # Used to keep track of the codes and their corresponding value
-        self.reverse_mapping = {} # Used to keep track of the compressed code and their corresponding character
+        self.heap = []             # Used to keep track of our tree
+        self.codes = {}            # Used to keep track of the codes and their corresponding value
+        self.reverse_mapping = {}  # Used to keep track of the compressed code and their corresponding character
 
     def make_frequency_dict(self, text):
         """
@@ -46,10 +46,11 @@ class HuffmanCoding:
         :param frequency: a dict containing the frequencies of all the characters in the text
         :return: a tree (specifically a heap) of all the nodes with the character and frequency stored in the nodes
         """
-
         for key in frequency:
             node = Node(key, frequency[key])
             heapq.heappush(self.heap, node)
+
+        self.merge_nodes()
 
     def merge_nodes(self):
         """
@@ -106,7 +107,6 @@ class HuffmanCoding:
     def compress(self, text):
         frequency = self.make_frequency_dict(text)
         self.make_tree(frequency)
-        self.merge_nodes()
         self.make_codes()
 
         encoded_text = self.get_encoded_text(text)

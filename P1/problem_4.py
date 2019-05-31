@@ -50,7 +50,7 @@ parent.add_group(child)
 
 nonexistent_user = "test"
 
-print(is_user_in_group(sub_child_user, parent))   # True
-print(is_user_in_group(nonexistent_user, parent)) # False
+print(is_user_in_group(sub_child_user, parent))    # True
+print(is_user_in_group(nonexistent_user, parent))  # False
 
 
