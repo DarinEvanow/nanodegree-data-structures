@@ -28,6 +28,11 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
+    if user is None:
+        return "ERROR: Please input a user."
+
+    if group is None:
+        return "ERROR: Please input a group."
 
     if user in group.users:
         return True
@@ -50,7 +55,16 @@ parent.add_group(child)
 
 nonexistent_user = "test"
 
-print(is_user_in_group(sub_child_user, parent))    # True
-print(is_user_in_group(nonexistent_user, parent))  # False
+# Test Case 1
+print(is_user_in_group(sub_child_user, parent))
+# True
+
+# Test Case 2
+print(is_user_in_group(nonexistent_user, parent))
+# False
+
+# Test Case 3
+print(is_user_in_group(None, parent))
+# ERROR: Please input a user
 
 

@@ -41,6 +41,9 @@ looping over our string takes O(n).
 At the end of this we will have our compressed string. The largest chunk of time is in creating
 the tree with all of the frequencies, which gives us the time of our algorithm at O(nlogn).
 
+The space complexity will be O(n) + O(k), where n is the length of the string, and k is the size
+of the tree created during the encoding process.
+
 ### Decompression
 
 Decompressing the code is simply a matter of iterating over our compressed string, looking for

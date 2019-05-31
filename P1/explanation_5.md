@@ -12,5 +12,6 @@ simply have the data needed, and a hash that we create using a hash function on 
 the block. When inserting a block into the blockchain, we make sure the new block references
 not only the previous block in the linked list, but also that it has a reference to the previous
 blocks hash. Our blockchain will have similar O(n) for the operations on it, though creating new
-blocks does take extra time depending on the difficulty of the hash function.
+blocks does take extra time depending on the difficulty of the hash function. The space complexity is
+O(n), as we need to store each block in the blockchain.
  

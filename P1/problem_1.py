@@ -69,7 +69,7 @@ class LRUCache(object):
         if key in self.cache:
             return
         elif self.queue.is_full():
-            stale_key = self.cache.deque()
+            stale_key = self.queue.deque().value
             del self.cache[stale_key]
 
         self.queue.queue(key)
@@ -77,9 +77,18 @@ class LRUCache(object):
 
 
 our_cache = LRUCache(5)
-
 our_cache.set(1, 1)
 our_cache.set(2, 2)
-print(our_cache.get(1))       # returns 1
-print(our_cache.get(2))       # returns 2
-print(our_cache.get(3))       # return -1
+our_cache.set(3, 3)
+our_cache.set(4, 4)
+our_cache.set(5, 5)
+our_cache.set(6, 6)
+
+print(our_cache.get(1))
+# Test case #1. This should return '-1' since our cache has a limit of 5, and we have set 6 items.
+
+print(our_cache.get(2))
+# Test case #2. This should return '2' since we have set 2 and it falls within our limit.
+
+print(our_cache.get(7))
+# Test case #2. This should return '-1' since we never set the number '7'

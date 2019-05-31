@@ -52,6 +52,9 @@ class LinkedList:
 
 
 def union(llist_1, llist_2):
+    if llist_1.size() is 0 and llist_2.size() is 0:
+        return "Both lists are empty"
+
     union_list = LinkedList()
     current = llist_1.head
     while current:
@@ -68,6 +71,9 @@ def union(llist_1, llist_2):
 
 
 def intersection(llist_1, llist_2):
+    if llist_1.size() is 0 and llist_2.size() is 0:
+        return "Both lists are empty"
+
     intersect_list = LinkedList()
     llist_1_size = llist_1.size()
     llist_2_size = llist_2.size()
@@ -106,8 +112,11 @@ for i in element_2:
 
 print('Union #1')
 print(union(linked_list_1,linked_list_2))
+# 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 21 -> 32 -> 9 -> 1 -> 11 ->
+
 print('Intersect #1')
 print(intersection(linked_list_1,linked_list_2))
+# 4 -> 6 -> 21 ->
 
 # Test case 2
 
@@ -125,5 +134,29 @@ for i in element_4:
 
 print('Union #2')
 print(union(linked_list_3, linked_list_4))
+# 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 23 -> 1 -> 7 -> 8 -> 9 -> 11 -> 21 ->
+
 print('Intersect #2')
 print(intersection(linked_list_3, linked_list_4))
+# These two lists have no common elements
+
+# Test Case 3
+linked_list_5 = LinkedList()
+linked_list_6 = LinkedList()
+
+element_5 = []
+element_6 = []
+
+for i in element_5:
+    linked_list_5.append(i)
+
+for i in element_6:
+    linked_list_6.append(i)
+
+print('Union #3')
+print(union(linked_list_5, linked_list_6))
+# Both lists are empty
+
+print('Intersect #3')
+print(intersection(linked_list_5, linked_list_6))
+# Both lists are empty

@@ -30,6 +30,18 @@ def find_files(suffix, path):
 
     do_file_find(suffix, path)
 
+    if len(results) is 0:
+        results = "No files found with that extension in the provided directory."
+
     return results
 
-print (find_files(".c", "testdir"))
+print(find_files(".c", "testdir"))
+# Should print ['testdir/subdir3/subsubdir1/b.c', 'testdir/t1.c', 'testdir/subdir5/a.c', 'testdir/subdir1/a.c'], as
+# this all of the files ending in '.c' provided by the example directory.
+
+print(find_files(".h", "testdir"))
+# Should print ['testdir/subdir3/subsubdir1/b.h', 'testdir/subdir5/a.h', 'testdir/t1.h', 'testdir/subdir1/a.h'], as
+# this all of the files ending in '.h' provided by the example directory.
+
+print(find_files(".x", "testdir"))
+# Should print "No files found with that extension in the provided directory." as no files exist with that extension.
