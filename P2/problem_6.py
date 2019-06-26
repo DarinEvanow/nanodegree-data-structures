@@ -21,12 +21,16 @@ def get_min_max(ints):
 random_ints = [i for i in range(0, 10)]  # a list containing 0 - 9
 random.shuffle(random_ints)
 print("Pass" if ((0, 9) == get_min_max(random_ints)) else "Fail")
+# Pass
 
 # Test Case for Typical Array of Numbers
-print("Pass" if ((3, 50) == get_min_max([10, 3, 27, 8, 11, 10, 50, 33])) else "Fail")
+print(get_min_max([10, 3, 27, 8, 11, 10, 50, 33]))
+# (3, 50)
 
-# Test Case of List with One Element
-print ("Pass" if ((1, 1) == get_min_max([1])) else "Fail")
+# Test Case for List with One Element
+print(get_min_max([1]))
+# (1, 1)
 
-# Test Case of Empty List
-print("Pass" if ("Please pass a non-empty list as an argument." == get_min_max([])) else "Fail")
+# Test Case for Empty List
+print(get_min_max([]))
+# Please pass a non-empty list as an argument.

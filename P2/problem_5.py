@@ -1,3 +1,4 @@
+# Each individual node in the tree
 class TrieNode:
     def __init__(self, char):
         # Initialize this node in the Trie
@@ -10,17 +11,30 @@ class TrieNode:
         if char not in self.children:
             self.children[char] = TrieNode(char)
 
-    def suffixes(self, suffix='', suffixes=[]):
-        # Recursive function that collects the suffix for
-        # all complete words below this point
+    def suffixes(self, suffix=''):
+        # Collects all the suffixes below a point
+        current_node = self
+        while suffix != '':
+            char = suffix[0]
+            current_node = current_node.children.get(char)
+            if current_node is None:
+                return []
 
-        suffix += self.char
+            suffix = suffix[1:]
 
-        if self.is_word:
-            suffixes.append(suffix[1:])
+        suffixes_list = current_node.collect_suffixes('')
+
+        return suffixes_list
+
+    def collect_suffixes(self, suffix):
+        # Recursive helper function to help collect suffixes
+
+        suffixes = []
+        if self.is_word and suffix != '':
+            suffixes.append(suffix)
 
         for child in self.children:
-            self.children[child].suffixes(suffix, suffixes)
+            suffixes += self.children.get(child).collect_suffixes(suffix + child)
 
         return suffixes
 
@@ -53,30 +67,41 @@ class Trie:
         return current_node
 
 
-MyTrie = Trie()
+TestTrie = Trie()
 wordList = [
     "ant", "anthology", "antagonist", "antonym",
     "fun", "function", "factory", "fraction",
     "trie", "trigger", "trigonometry", "tripod"
 ]
-for word in wordList:
-    MyTrie.insert(word)
+
+for item in wordList:
+    TestTrie.insert(item)
 
 
-def f(prefix):
+# Function used to print out the proper result based on what is passed into it
+def f(trie, prefix):
     if prefix != '':
-        prefixNode = MyTrie.find(prefix)
-        if prefixNode:
-            print('\n'.join(prefixNode.suffixes()))
+        prefix_node = trie.find(prefix)
+        if prefix_node:
+            print(prefix_node.suffixes())
         else:
             print(prefix + " not found")
     else:
-        print('')
+        print('Please pass in one or more characters')
 
-prefixNode = MyTrie.find('fu')
 
-if prefixNode is not None:
-    print(prefixNode.suffixes())
-else:
-    print('That prefix does not exist in the tree.')
+f(TestTrie, 'f')
+# ['un', 'unction', 'actory', 'raction']
+
+f(TestTrie, 'fun')
+# ['ction']
+
+f(TestTrie, 'ant')
+# ['hology', 'agonist', 'onym']
+
+f(TestTrie, 'z')
+# z not found
+
+f(TestTrie, '')
+# Please pass in one or more characters not found
 

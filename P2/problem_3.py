@@ -13,17 +13,29 @@ class MinHeap(object):
 # Wrapper for a MaxHeapObj, which we have so we can leverage the built in heapq by negating our values so they act
 # as a minheap in implementation, but a maxheap in practice
 class MaxHeapObj(object):
-  def __init__(self,val): self.val = val
-  def __lt__(self,other): return self.val > other.val
-  def __eq__(self,other): return self.val == other.val
-  def __str__(self): return str(self.val)
+    def __init__(self, val):
+        self.val = val
+
+    def __lt__(self, other):
+        return self.val > other.val
+
+    def __eq__(self, other):
+        return self.val == other.val
+
+    def __str__(self):
+        return str(self.val)
 
 
 # Wrapper for MaxHeap functionality
 class MaxHeap(MinHeap):
-    def heappush(self,x): heapq.heappush(self.h,MaxHeapObj(x))
-    def heappop(self): return heapq.heappop(self.h).val
-    def __getitem__(self,i): return self.h[i].val
+    def heappush(self, x):
+        heapq.heappush(self.h, MaxHeapObj(x))
+
+    def heappop(self):
+        return heapq.heappop(self.h).val
+
+    def __getitem__(self, i):
+        return self.h[i].val
 
 
 def rearrange_digits(input_list):
@@ -35,10 +47,16 @@ def rearrange_digits(input_list):
     Returns:
        (int),(int): Two maximum sums
     """
+    # Edge cases
+    if len(input_list) is 0 or len(input_list) is 1:
+        return "Please pass in a list with at least two elements"
+
+    # Create and populate our maxheap with the passed in list
     max_heap = MaxHeap()
     for item in input_list:
         max_heap.heappush(item)
 
+    # Grab the top of the heap, alternating the list we push them onto
     first = []
     second = []
     while len(max_heap) is not 0:
@@ -61,7 +79,23 @@ def test_function(test_case):
         print("Fail")
 
 
-test_case1 = [[1, 2, 3, 4, 5], [542, 31]]
-test_case2 = [[4, 6, 2, 5, 9, 8], [964, 852]]
-test_function(test_case1)
-test_function(test_case2)
+test_function([[1, 2, 3, 4, 5], [542, 31]])
+# Pass
+
+test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+# Pass
+
+print(rearrange_digits([1, 2, 3, 4, 5]))
+# [542, 31]
+
+print(rearrange_digits([4, 6, 2, 5, 9, 8]))
+# [964, 852]
+
+print(rearrange_digits([1, 2]))
+# [2, 1]
+
+print(rearrange_digits([1]))
+# Please pass in a list with at least two elements
+
+print(rearrange_digits([]))
+# Please pass in a list with at least two elements
