@@ -3,11 +3,20 @@ import heapq
 
 # Wrapper for MinHeap functionality
 class MinHeap(object):
-    def __init__(self): self.h = []
-    def heappush(self,x): heapq.heappush(self.h,x)
-    def heappop(self): return heapq.heappop(self.h)
-    def __getitem__(self,i): return self.h[i]
-    def __len__(self): return len(self.h)
+    def __init__(self):
+        self.h = []
+
+    def heappush(self, x):
+        heapq.heappush(self.h, x)
+
+    def heappop(self):
+        return heapq.heappop(self.h)
+
+    def __getitem__(self, i):
+        return self.h[i]
+
+    def __len__(self):
+        return len(self.h)
 
 
 # Wrapper for a MaxHeapObj, which we have so we can leverage the built in heapq by negating our values so they act

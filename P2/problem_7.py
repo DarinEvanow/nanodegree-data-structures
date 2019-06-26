@@ -1,5 +1,5 @@
 class RouteTrieNode:
-    def __init__(self, handler = None):
+    def __init__(self, handler=None):
         self.handler = handler
         self.children = {}
 
@@ -47,7 +47,7 @@ class Router:
         return self.routes.find(paths) or self.not_found
 
     def split_path(self, route):
-        if len(route) == 1:
+        if len(route) is 1:
             return ["/"]
         else:
             return route.strip("/").split("/")
